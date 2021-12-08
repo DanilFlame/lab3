@@ -1,0 +1,63 @@
+using System;
+
+namespace ConsoleApp11
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            QuadraticEquation qe;
+            double max1 = double.MinValue, max2 = double.MinValue, max3 = double.MinValue;
+            string[] input;
+            Console.Write("Введите коэффициенты первого уравнения (A, B, C), разделяя их пробелами: ");
+            input = Console.ReadLine().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            qe = new QuadraticEquation(double.Parse(input[0]), double.Parse(input[1]), double.Parse(input[2]));
+            if (qe.roots != null)
+                foreach (double item in qe.roots)
+                {
+                    max1 = item >= max1 ? item : max1;
+                }
+            Console.Write("Введите коэффициенты второго уравнения (D, F, C), разделяя их пробелами: ");
+            input = Console.ReadLine().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            qe = new QuadraticEquation(double.Parse(input[0]), double.Parse(input[1]), double.Parse(input[2]));
+            if (qe.roots != null)
+                foreach (double item in qe.roots)
+                {
+                    max2 = item >= max2 ? item : max2;
+                }
+            Console.Write("Введите коэффициенты третьего уравнения (Z, Y, S), разделяя их пробелами: ");
+            input = Console.ReadLine().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            qe = new QuadraticEquation(double.Parse(input[0]), double.Parse(input[1]), double.Parse(input[2]));
+            if (qe.roots != null)
+                foreach (double item in qe.roots)
+                {
+                    max3 = item >= max3 ? item : max3;
+                }
+            Console.Write("Максимальное значение корня равно {0:g}", Math.Max(Math.Max(max1, max2), max3));
+            Console.ReadLine();
+        }
+
+    }
+    class QuadraticEquation
+    {
+        private double a, b, c;
+        public double[] roots { get; private set; }
+        public QuadraticEquation(double a, double b, double c)
+        {
+            this.a = a; this.b = b; this.c = c;
+            Solve();
+        }
+        private void Solve()
+        {
+            double d = b * b - 4 * a * c;
+            if (d > 0)
+            {
+                roots = new double[2] { (-b - Math.Sqrt(d)) / (2 * a), (-b + Math.Sqrt(d)) / (2 * a) };
+            }
+            else if (d == 0)
+            {
+                roots = new double[1] { -b / (2 * a) };
+            }
+        }
+    }
+}
